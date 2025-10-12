@@ -1,4 +1,5 @@
--- Big Tech pipeline schema
+-- Outbound Pipelines Database Schema (Supabase/Postgres)
+-- Big Tech Paid Projects
 create table if not exists public.bigtech_pages (
 	id bigserial primary key,
 	url text not null unique,
@@ -11,26 +12,16 @@ create table if not exists public.bigtech_pages (
 create table if not exists public.bigtech_signals (
 	id bigserial primary key,
 	url text not null,
-	signal_type text not null,
+	signal_type text,
 	snippet text,
 	source text not null default 'html',
+	found_items integer,
 	inserted_at timestamptz not null default now()
 );
 
-create table if not exists public.contacts (
-	id bigserial primary key,
-	name text not null,
-	title text,
-	email text,
-	organization text,
-	inserted_at timestamptz not null default now()
-);
-
--- Helpful indexes
 create index if not exists idx_bigtech_signals_url on public.bigtech_signals(url);
-create index if not exists idx_contacts_email on public.contacts(lower(email));
 
--- VC Partnerships pipeline schema
+-- VC-Backed Series A+ Partnerships
 create table if not exists public.vc_portfolios (
 	id bigserial primary key,
 	portfolio_url text not null unique,
@@ -60,7 +51,7 @@ create table if not exists public.partnership_signals (
 
 create index if not exists idx_partnership_signals_company on public.partnership_signals(company_domain);
 
--- UT Alumni pipeline schema
+-- UT Austin Alumni / Donor Fundraising
 create table if not exists public.ut_pages (
 	id bigserial primary key,
 	url text not null unique,
@@ -75,3 +66,15 @@ create table if not exists public.ut_donor_signals (
 	tag text,
 	inserted_at timestamptz not null default now()
 );
+
+-- Shared Contacts (optional)
+create table if not exists public.contacts (
+	id bigserial primary key,
+	name text not null,
+	title text,
+	email text,
+	organization text,
+	inserted_at timestamptz not null default now()
+);
+
+create index if not exists idx_contacts_email on public.contacts(lower(email));
