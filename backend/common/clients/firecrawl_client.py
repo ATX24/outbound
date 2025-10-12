@@ -29,6 +29,13 @@ class FirecrawlClient:
         resp.raise_for_status()
         return resp.json()
 
+    def extract(self, url: str, **options: Any) -> Dict[str, Any]:
+        payload: Dict[str, Any] = {"url": url}
+        payload.update(options)
+        resp = self.session.post(f"{self.base_url}/extract", json=payload, timeout=self.timeout_seconds)
+        resp.raise_for_status()
+        return resp.json()
+
 
 _firecrawl_client: FirecrawlClient | None = None
 

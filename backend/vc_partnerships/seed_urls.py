@@ -1,6 +1,6 @@
-VC_PORTFOLIO_URLS: list[str] = [
-    "https://a16z.com/portfolio/",
-    "https://www.sequoiacap.com/companies/",
-    "https://www.accel.com/companies",
-    "https://www.kleinerperkins.com/companies/",
+VC_PORTFOLIO_URLS: list[tuple[str, str]] = [
+    ("a16z", "https://a16z.com/portfolio/"),
+    ("Sequoia", "https://www.sequoiacap.com/companies/"),
+    ("Accel", "https://www.accel.com/companies"),
+    ("Kleiner Perkins", "https://www.kleinerperkins.com/companies/"),
 ]
